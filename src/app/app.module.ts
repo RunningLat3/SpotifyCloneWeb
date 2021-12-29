@@ -1,21 +1,40 @@
-import { NgModule } from '@angular/core';
+import { WebModule } from './pages/shared/web.module';
+import { RouterModule } from '@angular/router';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-// Routes
-import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // Components and Modules
 import { AppComponent } from './app.component';
-import { SideBarComponent } from './pages/shared/side-bar/side-bar.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HttpErrorInterceptor } from './helpers/http-error.interceptor';
+import { appInitializer } from './helpers/app.initializer';
+import { AuthService } from './services/auth/auth.service';
 
 // Services
-import { GlobalService } from './services/global.service';
 
 @NgModule({
-  declarations: [AppComponent, SideBarComponent],
-  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule],
-  providers: [GlobalService],
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    RouterModule,
+    WebModule,
+    FontAwesomeModule,
+  ],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer,
+      multi: true,
+      deps: [AuthService],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

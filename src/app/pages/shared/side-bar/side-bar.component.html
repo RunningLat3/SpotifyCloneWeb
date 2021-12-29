@@ -1,5 +1,9 @@
 <div class="text-gray-500 p-5 text-sm border-r border-gray-900">
   <div class="space-y-4">
+    <button (click)="onLogout()" class="flex items-center space-x-2 hover:text-white">
+      <fa-icon [icon]="faHome" class="text-xl"></fa-icon>
+      <p>Logout</p>
+    </button>
     <button class="flex items-center space-x-2 hover:text-white">
       <fa-icon [icon]="faHome" class="text-xl"></fa-icon>
       <p>Home</p>
