@@ -1,9 +1,9 @@
 import { AuthGuard } from '../../helpers/auth.guard';
 import { LayoutComponent } from './layout/layout.component';
-import { NgModule } from '@angular/core';
-import { RouterModule, Route } from '@angular/router';
-import { LoginComponent } from '../login/login-component/login.component';
-import { CallbackComponent } from '../login/callback-component/callback.component';
+import { Route } from '@angular/router';
+import { LoginComponent } from '../login/login.component';
+import { CallbackComponent } from '../callback/callback.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const webRoutes: Route[] = [
   {
@@ -14,7 +14,12 @@ export const webRoutes: Route[] = [
       {
         path: '',
         loadChildren: async () =>
-          (await import('../home/home.module')).HomeModule,
+          (await import('../home/feature/home.module')).HomeModule,
+      },
+      {
+        path: 'search',
+        loadChildren: async () =>
+          (await import('../search/feature/search.module')).SearchModule,
       },
     ],
   },
@@ -25,5 +30,9 @@ export const webRoutes: Route[] = [
   {
     path: 'callback',
     component: CallbackComponent,
-  }
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+  },
 ];

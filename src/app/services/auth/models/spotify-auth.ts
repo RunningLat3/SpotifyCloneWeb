@@ -1,4 +1,7 @@
-import { TokenRequestType } from "./token-request-type.enum";
+export enum TokenRequestType {
+  Refresh = 'Refresh',
+  Access = 'Access',
+}
 
 export interface SpotifyAuthorizeResponse {
   code: string | null;

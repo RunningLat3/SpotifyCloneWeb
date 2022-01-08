@@ -1,0 +1,25 @@
+<div class="px-6 pb-1"></div>
+<ul>
+  <li *ngFor="let navItem of navItems" class="px-2">
+    <a
+      routerLink="{{ navItem.path }}"
+      routerLinkActive="active"
+      class="flex items-center px-4 nav-link link-subtle"
+    >
+      <fa-icon
+        *ngIf="navItem.icon as icon"
+        [icon]="icon"
+        class="text-[24px]"
+      ></fa-icon>
+      <span>{{ navItem.label }}</span>
+    </a>
+  </li>
+</ul>
+<!-- Horizontal line -->
+<div class="mx-6 separator"></div>
+<!-- Playlists -->
+<ul class="playlists">
+  <li class="p-2" *ngFor="let playlist of playlists.items">
+    <sc-nav-playlist [playlist]="playlist"></sc-nav-playlist>
+  </li>
+</ul>

@@ -9,7 +9,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginURL: string = '';
-  returnUrl: string = '/';
 
   constructor(
     private router: Router,
@@ -23,7 +22,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    let returnUrl: string = this.route.snapshot.queryParams['returnUrl'] || '/';
+    sessionStorage.setItem("returnUrl", returnUrl);
   }
 
   onClick() {

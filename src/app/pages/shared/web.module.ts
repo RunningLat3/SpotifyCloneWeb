@@ -7,6 +7,7 @@ import { LayoutModule } from './layout/layout.module';
 import { webRoutes } from './web.routes';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   imports: [
@@ -18,5 +19,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   ],
   providers: [AuthService],
   exports: [RouterModule],
+  declarations: [
+    PageNotFoundComponent
+  ],
 })
 export class WebModule {}

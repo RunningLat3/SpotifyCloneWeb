@@ -1,26 +1,26 @@
-import { SpotifyAuthorizeResponse } from './models/spotify-auth-model';
+import { SpotifyAuthorizeResponse } from './models/spotify-auth';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CurrentUserProfileReponse } from './models/current-user-profile-response-model';
+import { CurrentUserProfile } from './models/current-user-profile';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<CurrentUserProfileReponse>;
-  public currentUser: Observable<CurrentUserProfileReponse>;
+  private currentUserSubject: BehaviorSubject<CurrentUserProfile>;
+  public currentUser: Observable<CurrentUserProfile>;
 
   constructor(private router: Router, private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<CurrentUserProfileReponse>(
-      <CurrentUserProfileReponse>{}
+    this.currentUserSubject = new BehaviorSubject<CurrentUserProfile>(
+      <CurrentUserProfile>{}
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get userValue(): CurrentUserProfileReponse {
+  public get userValue(): CurrentUserProfile {
     return this.currentUserSubject.value || null;
   }
 
@@ -37,7 +37,7 @@ export class AuthService {
 
   authenticate(data: SpotifyAuthorizeResponse) {
     return this.http
-      .post<CurrentUserProfileReponse>(
+      .post<CurrentUserProfile>(
         `${environment.apiBaseUrl}/auth/authenticate`,
         { ...data },
         {
@@ -49,9 +49,11 @@ export class AuthService {
         }
       )
       .pipe(
-        map((user: CurrentUserProfileReponse) => {
-          this.currentUserSubject.next(user);
-          this.startRefreshTokenTimer();
+        map((user: CurrentUserProfile) => {
+          if (user) {
+            this.currentUserSubject.next(user);
+            this.startRefreshTokenTimer();
+          }
           return user;
         })
       );
@@ -59,7 +61,7 @@ export class AuthService {
 
   logout() {
     this.http
-      .post<CurrentUserProfileReponse>(
+      .post<CurrentUserProfile>(
         `${environment.apiBaseUrl}/auth/revoke-token`,
         {},
         {
@@ -72,14 +74,14 @@ export class AuthService {
       )
       .subscribe(() => {
         this.stopRefreshTokenTimer();
-        this.currentUserSubject.next(<CurrentUserProfileReponse>{});
+        this.currentUserSubject.next(<CurrentUserProfile>{});
         this.router.navigate(['/login']);
       });
   }
 
   refreshToken() {
     return this.http
-      .post<CurrentUserProfileReponse>(
+      .post<CurrentUserProfile>(
         `${environment.apiBaseUrl}/auth/refresh-token`,
         {},
         {
@@ -91,9 +93,11 @@ export class AuthService {
         }
       )
       .pipe(
-        map((user: CurrentUserProfileReponse) => {
-          this.currentUserSubject.next(user);
-          this.startRefreshTokenTimer();
+        map((user: CurrentUserProfile) => {
+          if (user) {
+            this.currentUserSubject.next(user);
+            this.startRefreshTokenTimer();
+          }
           return user;
         })
       );

@@ -1,0 +1,54 @@
+<footer class="now-playing-bar-container">
+    <!-- Current Playing Info -->
+    <div class="now-playing-bar-left">
+      <div class="flex flex-row items-center justify-start relative">
+        <div class="isolate relative">
+          <a class="border-none">
+            <div class="flex-shrink-0 relative">
+              <div
+                class="bg-[#282828] border-0 block m-0 relative z-0 h-[56px] w-[56px]"
+              >
+                <div>
+                  <img
+                    class="bg-black bg-no-repeat bg-contain bg-[50%_center] h-full left-0 absolute top-0 w-full object-cover object-[center_center]"
+                    src="../../../../assets/img/Spotify_Icon_RGB_Green.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="flex flex-col text-white my-0 mx-[14px] gap-x-[8px]">
+          <div
+            class="text-[14px] font-normal normal-case tracking-normal leading-[16px]"
+          >
+            <span>Koi</span>
+          </div>
+          <div
+            class="text-[14px] font-normal normal-case tracking-normal leading-[16px]"
+          >
+            <span>Gen Hoshino</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Player Control -->
+    <div class="now-playing-bar-center">
+      <!-- control -->
+      <div></div>
+      <!-- play back -->
+      <div class="flex items-center justify-between mx-4">
+        <span class="text-xs text-white text-opacity-60">30</span>
+        <nz-slider
+          class="flex-1 mx-2"
+          [ngModel]="30"
+          [nzTooltipVisible]="'never'"
+        >
+        </nz-slider>
+        <span class="text-xs text-white text-opacity-60">100</span>
+      </div>
+    </div>
+    <!-- Player Volume -->
+    <div class="flex items-center justify-end"></div>
+</footer>

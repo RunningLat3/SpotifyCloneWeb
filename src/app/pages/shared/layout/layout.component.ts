@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,

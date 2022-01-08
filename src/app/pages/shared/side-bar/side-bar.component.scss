@@ -1,0 +1,21 @@
+:host {
+  grid-area: side-bar;
+  z-index: 3;
+  min-height: 0;
+  @apply w-sideBar flex flex-col pt-6 bg-black;
+}
+
+
+.nav-link-container {
+  &__nav-link {
+    border-radius: 4px;
+    height: 40px;
+    @apply space-x-4;
+
+    &.active {
+      @apply text-white;
+      background-color: #282828;
+      font-weight: 600;
+    }
+  }
+}

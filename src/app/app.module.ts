@@ -1,3 +1,4 @@
+import { authInterceptorProvider } from './helpers/auth.interceptor';
 import { WebModule } from './pages/shared/web.module';
 import { RouterModule } from '@angular/router';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
@@ -7,9 +8,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // Components and Modules
 import { AppComponent } from './app.component';
-import { HttpErrorInterceptor } from './helpers/http-error.interceptor';
+import { httpErrorInterceptorProvider } from './helpers/http-error.interceptor';
 import { appInitializer } from './helpers/app.initializer';
 import { AuthService } from './services/auth/auth.service';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Services
 
@@ -21,6 +24,8 @@ import { AuthService } from './services/auth/auth.service';
     RouterModule,
     WebModule,
     FontAwesomeModule,
+    FormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {
@@ -29,11 +34,8 @@ import { AuthService } from './services/auth/auth.service';
       multi: true,
       deps: [AuthService],
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptor,
-      multi: true,
-    },
+    authInterceptorProvider,
+    httpErrorInterceptorProvider
   ],
   bootstrap: [AppComponent],
 })
